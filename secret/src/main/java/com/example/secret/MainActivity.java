@@ -1,6 +1,7 @@
 package com.example.secret;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,12 +11,24 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.secret.activity.ActLogin;
+import com.example.secret.activity.ActTimeline;
+
 public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        String token=Config.getCachedToken(this);
+        if (token!=null) {
+            Intent intent=new Intent(this,ActTimeline.class);
+            intent.putExtra(Config.KEY_TOKEN,token);
+            startActivity(intent);
+        }else {
+            startActivity(new Intent(getBaseContext(),ActLogin.class));
+        }
     }
 
     @Override
