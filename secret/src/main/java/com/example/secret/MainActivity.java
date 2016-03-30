@@ -20,16 +20,15 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        startActivity(new Intent(getBaseContext(),ActTimeline.class));
-
-//        String token=Config.getCachedToken(this);
-//        if (token!=null) {
-//            Intent intent=new Intent(this,ActTimeline.class);
-//            intent.putExtra(Config.KEY_TOKEN,token);
-//            startActivity(intent);
-//        }else {
-//            startActivity(new Intent(getBaseContext(),ActLogin.class));
-//        }
+//        startActivity(new Intent(getBaseContext(),ActTimeline.class));
+        String token=Config.getCachedToken(this);
+        if (token!=null) {
+            Intent intent=new Intent(this,ActTimeline.class);
+            intent.putExtra(Config.KEY_TOKEN,token);
+            startActivity(intent);
+        }else {
+            startActivity(new Intent(getBaseContext(),ActLogin.class));
+        }
         finish();
     }
 

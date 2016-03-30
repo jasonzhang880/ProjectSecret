@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 
 import com.example.secret.Config;
 
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -22,8 +24,7 @@ public class NetConnection {
             protected void onPostExecute(String s) {
                 if(s!=null) {
                     if (successCallback!=null) {
-                        successCallback.onSuccess(s);
-
+                            successCallback.onSuccess(s);
                     }
                  }else {
 
@@ -48,6 +49,7 @@ public class NetConnection {
                                 uc.setDoOutput(true);
                                 BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(uc.getOutputStream(), Config.CHARSET));
                                 bw.write(paramsStr.toString());
+                                bw.flush();
                                 break;
                             default:
                                 uc=new URL(url+"?"+paramsStr.toString()).openConnection();
