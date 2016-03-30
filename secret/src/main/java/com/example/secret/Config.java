@@ -10,6 +10,7 @@ public class Config {
 
     public static final String KEY_TOKEN="token";
     public static final String APP_ID="com.jasonzhang.secret";
+    public static final String CHARSET="utf-8";
 
     public static String getCachedToken(Context context) {
         return context.getSharedPreferences(APP_ID,Context.MODE_PRIVATE).getString(KEY_TOKEN,null);
