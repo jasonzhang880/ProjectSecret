@@ -1,5 +1,7 @@
 package com.example.secret.net;
 
+import android.util.Log;
+
 import com.example.secret.Config;
 
 import org.json.JSONException;
@@ -15,7 +17,7 @@ public class GetCode {
             public void onSuccess(String result) {
                 try {
                     JSONObject jsonObject=new JSONObject(result);
-
+                    Log.d(Config.TAG, "5获取验证码的结果"+result);
                     switch (jsonObject.getInt(Config.KEY_STATUS)) {
                         case Config.RESULT_STATUS_SUCESS:
                             if (successCallback!=null) {

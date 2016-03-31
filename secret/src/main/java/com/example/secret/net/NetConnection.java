@@ -1,6 +1,7 @@
 package com.example.secret.net;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.secret.Config;
 
@@ -18,22 +19,9 @@ import java.net.URLConnection;
  * Created by Administrator on 2016/3/13 0013.
  */
 public class NetConnection {
+
     public NetConnection(final String url, final HttpMethod method, final SuccessCallback successCallback, final FailCallback failCallback, final String...kvs) {
         new AsyncTask<Void ,Void, String>() {
-            @Override
-            protected void onPostExecute(String s) {
-                if(s!=null) {
-                    if (successCallback!=null) {
-                            successCallback.onSuccess(s);
-                    }
-                 }else {
-
-                    if (failCallback!=null) {
-                        failCallback.onFail();
-                    }
-                }
-            }
-
             @Override
             protected String doInBackground(Void... params) {
                 StringBuffer paramsStr=new StringBuffer();
@@ -54,24 +42,41 @@ public class NetConnection {
                             default:
                                 uc=new URL(url+"?"+paramsStr.toString()).openConnection();
                                 break;
-
                         }
-
+                        Log.d(Config.TAG, "1请求的url" + uc.getURL());
+                        Log.d(Config.TAG, "2请求的数据" +paramsStr);
                         BufferedReader br=new BufferedReader(new InputStreamReader(uc.getInputStream(),Config.CHARSET));
                         String line=null;
                         StringBuffer result=new StringBuffer();
                         while((line=br.readLine())!=null) {
                             result.append(line);
                         }
-                        System.out.println("读取结果"+result);
-
+                        Log.d(Config.TAG, "3读取的结果" + result);
+                        return result.toString();
 
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 return null;
             }
-        };
+
+            @Override
+            protected void onPostExecute(String s) {
+                if(s!=null) {
+                    if (successCallback!=null) {
+                        successCallback.onSuccess(s);
+
+                    }
+                }else {
+
+                    if (failCallback!=null) {
+                        failCallback.onFail();
+                    }
+                }
+                super.onPostExecute(s);
+            }
+
+        }.execute();
     }
     public static interface SuccessCallback{
         void onSuccess(String result);
