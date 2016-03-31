@@ -13,6 +13,7 @@ import com.example.secret.Config;
 import com.example.secret.R;
 import com.example.secret.net.GetCode;
 import com.example.secret.net.Login;
+import com.example.secret.tools.MD5Tool;
 
 /**
  * Created by Administrator on 2016/3/13 0013.
@@ -65,24 +66,24 @@ public class ActLogin extends Activity{
                     return;
                 }
 
-//                new Login(phone_md5, etCode.getText().toString(), new Login.SuccessCallback() {
-//                    @Override
-//                    public void onSuccess(String token) {
-//                        Config.cacheToken(getBaseContext(), token);
-//                        Config.cachePhoneNum(getBaseContext(),etPhone.getText().toString());
-//                        Intent i=new Intent(ActLogin.this,ActTimeline.class);
-//                        i.putExtra(Config.KEY_TOKEN,token);
-//                        i.putExtra(Config.KEY_PHONE_NUM,etPhone.getText().toString());
-//                        startActivity(i);
-//
-//                        finish();
-//                    }
-//                }, new Login.FailCallback() {
-//                    @Override
-//                    public void onFail() {
-//                        Toast.makeText(getBaseContext(), R.string.login_failed,Toast.LENGTH_LONG).show();
-//                    }
-//                });
+                new Login(MD5Tool.md5(etPhone.getText().toString()), etCode.getText().toString(), new Login.SuccessCallback() {
+                    @Override
+                    public void onSuccess(String token) {
+                        Config.cacheToken(getBaseContext(), token);
+                        Config.cachePhoneNum(getBaseContext(),etPhone.getText().toString());
+                        Intent i=new Intent(ActLogin.this,ActTimeline.class);
+                        i.putExtra(Config.KEY_TOKEN,token);
+                        i.putExtra(Config.KEY_PHONE_NUM,etPhone.getText().toString());
+                        startActivity(i);
+
+                        finish();
+                    }
+                }, new Login.FailCallback() {
+                    @Override
+                    public void onFail() {
+                        Toast.makeText(getBaseContext(), R.string.login_failed,Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
     }
