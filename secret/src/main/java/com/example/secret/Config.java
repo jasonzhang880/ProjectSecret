@@ -23,7 +23,8 @@ public class Config {
 
     public static final String APP_ID="com.jasonzhang.secret";
     public static final String CHARSET="utf-8";
-    public static final String SERVER_URL="http:/demo.eoeschool.com/api/v1/nimings/io";
+//    public static final String SERVER_URL="http:/demo.eoeschool.com/api/v1/nimings/io";
+    public static final String SERVER_URL="http://localhost:8080/TestServer/api.jsp";
 
 
 
@@ -36,6 +37,15 @@ public class Config {
     public static void cacheToken(Context context,String token) {
         SharedPreferences.Editor e=context.getSharedPreferences(APP_ID,Context.MODE_PRIVATE).edit();
         e.putString(KEY_TOKEN,token);
+        e.commit();
+    }
+    public static String getCachedPhoneNum(Context context) {
+        return context.getSharedPreferences(APP_ID,Context.MODE_PRIVATE).getString(KEY_PHONE_NUM,null);
+    }
+
+    public static void cachePhoneNum(Context context,String phoneNum) {
+        SharedPreferences.Editor e=context.getSharedPreferences(APP_ID,Context.MODE_PRIVATE).edit();
+        e.putString(KEY_PHONE_NUM,phoneNum);
         e.commit();
     }
 }
