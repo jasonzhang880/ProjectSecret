@@ -37,11 +37,11 @@ public class ActLogin extends Activity{
                             Toast.makeText(getBaseContext(), R.string.phone_num_cant_be_empty,Toast.LENGTH_LONG).show();
                             return;
                         }
-//                        final ProgressDialog pd=ProgressDialog.show(getBaseContext(),getString(R.string.connecting),getString(R.string.connecting_to_server));
+                        final ProgressDialog pd=ProgressDialog.show(getBaseContext(),getString(R.string.connecting),getString(R.string.connecting_to_server));
                         new GetCode(etPhone.getText().toString(), new GetCode.SuccessCallback() {
                             @Override
                             public void onSuccess() {
-//                                pd.dismiss();
+                                pd.dismiss();
                                 Toast.makeText(getBaseContext(), R.string.success_to_get_code,Toast.LENGTH_LONG).show();
                             }
                         }, new GetCode.FailCallback() {
@@ -65,10 +65,11 @@ public class ActLogin extends Activity{
                     Toast.makeText(getBaseContext(), R.string.code_cant_be_empty,Toast.LENGTH_LONG).show();
                     return;
                 }
-
+                final ProgressDialog pd=ProgressDialog.show(getBaseContext(),getString(R.string.connecting),getString(R.string.connecting_to_server));
                 new Login(MD5Tool.md5(etPhone.getText().toString()), etCode.getText().toString(), new Login.SuccessCallback() {
                     @Override
                     public void onSuccess(String token) {
+                        pd.dismiss();
                         Config.cacheToken(getBaseContext(), token);
                         Config.cachePhoneNum(getBaseContext(),etPhone.getText().toString());
                         Intent i=new Intent(ActLogin.this,ActTimeline.class);
@@ -81,6 +82,7 @@ public class ActLogin extends Activity{
                 }, new Login.FailCallback() {
                     @Override
                     public void onFail() {
+                        pd.dismiss();
                         Toast.makeText(getBaseContext(), R.string.login_failed,Toast.LENGTH_LONG).show();
                     }
                 });

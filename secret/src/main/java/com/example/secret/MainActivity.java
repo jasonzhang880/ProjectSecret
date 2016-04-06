@@ -7,10 +7,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.secret.Id.MyContacts;
 import com.example.secret.activity.ActLogin;
 import com.example.secret.activity.ActTimeline;
 
@@ -20,11 +22,14 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        startActivity(new Intent(getBaseContext(),ActTimeline.class));
+//        MyContacts.getContactsJSONString(this);
+//        Log.d(Config.TAG, "联系人读取结果" +MyContacts.getContactsJSONString(this));
         String token=Config.getCachedToken(this);
-        if (token!=null) {
+        String phone_num=Config.getCachedPhoneNum(this);
+        if (token!=null&&phone_num!=null) {
             Intent intent=new Intent(this,ActTimeline.class);
             intent.putExtra(Config.KEY_TOKEN,token);
+            intent.putExtra(Config.KEY_PHONE_NUM,phone_num);
             startActivity(intent);
         }else {
             startActivity(new Intent(getBaseContext(),ActLogin.class));

@@ -14,6 +14,9 @@ public class Login {
             @Override
             public void onSuccess(String result){
                 try {
+
+                    //NetConnection中onPostExecute()方法中调用了onSuccess(s)方法传入了从服务器返回的字符串。
+                    //实现NetConnection类的回调接口中的onSuccess方法
                     JSONObject obj=new JSONObject(result);
 
                     switch (obj.getInt(Config.KEY_STATUS)) {
@@ -39,7 +42,7 @@ public class Login {
             @Override
             public void onFail() {
             }
-        },Config.KEY_ACTION,Config.ACTION_LOGIN,Config.KEY_PHOME_MD5,phone_md5,Config.KEY_CODE,code);
+        },Config.KEY_ACTION,Config.ACTION_LOGIN,Config.KEY_PHONE_MD5,phone_md5,Config.KEY_CODE,code);
     }
 
     public static interface SuccessCallback{
