@@ -35,9 +35,13 @@ public class TimeLine {
                                 successCallback.onSuccess(object.getInt(Config.KEY_PAGE),object.getInt(Config.KEY_PERPAGE),msgs);
                             }
                             break;
+                        case Config.RESULT_STATUS_INVALID_TOKEN:
+                            if (failCallback!=null) {
+                                failCallback.onFail(Config.RESULT_STATUS_INVALID_TOKEN);
+                            }
                         default:
                             if (failCallback!=null) {
-                                failCallback.onFail();
+                                failCallback.onFail(Config.RESULT_STATUS_FAIL);
                             }
                             break;
                     }
@@ -61,6 +65,6 @@ public class TimeLine {
     }
 
     public static interface FailCallback {
-        void onFail();
+        void onFail(int errorCode);
     }
 }

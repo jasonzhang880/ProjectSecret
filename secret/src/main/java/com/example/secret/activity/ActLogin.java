@@ -21,7 +21,6 @@ import com.example.secret.tools.MD5Tool;
 public class ActLogin extends Activity{
     private EditText etPhone;
     private EditText etCode;
-    private EditText test;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,21 +33,21 @@ public class ActLogin extends Activity{
                     @Override
                     public void onClick(View view) {
 
-                        if (TextUtils.isEmpty(etPhone.getText())) {
-                            Toast.makeText(getBaseContext(), R.string.phone_num_cant_be_empty, Toast.LENGTH_LONG).show();
+                        if(TextUtils.isEmpty(etPhone.getText())) {
+                            Toast.makeText(getBaseContext(), R.string.phone_num_cant_be_empty,Toast.LENGTH_LONG).show();
                             return;
                         }
-                        final ProgressDialog pd = ProgressDialog.show(getBaseContext(), getString(R.string.connecting), getString(R.string.connecting_to_server));
+                        final ProgressDialog pd=ProgressDialog.show(getBaseContext(),getString(R.string.connecting),getString(R.string.connecting_to_server));
                         new GetCode(etPhone.getText().toString(), new GetCode.SuccessCallback() {
                             @Override
                             public void onSuccess() {
                                 pd.dismiss();
-                                Toast.makeText(getBaseContext(), R.string.success_to_get_code, Toast.LENGTH_LONG).show();
+                                Toast.makeText(getBaseContext(), R.string.success_to_get_code,Toast.LENGTH_LONG).show();
                             }
                         }, new GetCode.FailCallback() {
                             @Override
                             public void onFail() {
-                                Toast.makeText(getBaseContext(), R.string.fail_to_get_code, Toast.LENGTH_LONG).show();
+                                Toast.makeText(getBaseContext(), R.string.fail_to_get_code,Toast.LENGTH_LONG).show();
                             }
                         });
                     }
@@ -58,24 +57,24 @@ public class ActLogin extends Activity{
         findViewById(R.id.btnLogin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (TextUtils.isEmpty(etPhone.getText())) {
-                    Toast.makeText(getBaseContext(), R.string.phone_num_cant_be_empty, Toast.LENGTH_LONG).show();
+                if(TextUtils.isEmpty(etPhone.getText())) {
+                    Toast.makeText(getBaseContext(), R.string.phone_num_cant_be_empty,Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (TextUtils.isEmpty(etCode.getText().toString())) {
-                    Toast.makeText(getBaseContext(), R.string.code_cant_be_empty, Toast.LENGTH_LONG).show();
+                if(TextUtils.isEmpty(etCode.getText().toString())) {
+                    Toast.makeText(getBaseContext(), R.string.code_cant_be_empty,Toast.LENGTH_LONG).show();
                     return;
                 }
-                final ProgressDialog pd = ProgressDialog.show(getBaseContext(), getString(R.string.connecting), getString(R.string.connecting_to_server));
+                final ProgressDialog pd=ProgressDialog.show(getBaseContext(),getString(R.string.connecting),getString(R.string.connecting_to_server));
                 new Login(MD5Tool.md5(etPhone.getText().toString()), etCode.getText().toString(), new Login.SuccessCallback() {
                     @Override
                     public void onSuccess(String token) {
                         pd.dismiss();
                         Config.cacheToken(getBaseContext(), token);
-                        Config.cachePhoneNum(getBaseContext(), etPhone.getText().toString());
-                        Intent i = new Intent(ActLogin.this, ActTimeline.class);
-                        i.putExtra(Config.KEY_TOKEN, token);
-                        i.putExtra(Config.KEY_PHONE_NUM, etPhone.getText().toString());
+                        Config.cachePhoneNum(getBaseContext(),etPhone.getText().toString());
+                        Intent i=new Intent(ActLogin.this,ActTimeline.class);
+                        i.putExtra(Config.KEY_TOKEN,token);
+                        i.putExtra(Config.KEY_PHONE_NUM,etPhone.getText().toString());
                         startActivity(i);
 
                         finish();
@@ -84,7 +83,7 @@ public class ActLogin extends Activity{
                     @Override
                     public void onFail() {
                         pd.dismiss();
-                        Toast.makeText(getBaseContext(), R.string.login_failed, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), R.string.login_failed,Toast.LENGTH_LONG).show();
                     }
                 });
             }
