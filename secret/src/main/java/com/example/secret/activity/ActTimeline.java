@@ -5,6 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -37,6 +40,7 @@ public class ActTimeline extends ListActivity {
         adapter=new ActTimelineMessageListAdapter(this);
         setListAdapter(adapter);
 
+
         phone_num=getIntent().getStringExtra(Config.KEY_PHONE_NUM);
         token=getIntent().getStringExtra(Config.KEY_TOKEN);
         phone_md5= MD5Tool.md5(phone_num);
@@ -68,10 +72,33 @@ public class ActTimeline extends ListActivity {
         Message msg=adapter.getItem(position);
         Intent intent=new Intent(getBaseContext(),ActMessage.class);
         intent.putExtra(Config.KEY_MSG,msg.getMsg());
-        intent.putExtra(Config.KEY_MSG_ID,msg.getMsgId());
+        intent.putExtra(Config.KEY_MSG_ID, msg.getMsgId());
         intent.putExtra(Config.KEY_PHONE_MD5,msg.getPhone_md5());
+        intent.putExtra(Config.KEY_TOKEN,token);
         startActivity(intent);
         Log.d(Config.TAG, "启动ActMessage");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_act_timeline,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuShowActPublish :
+                Intent intent=new Intent(getBaseContext(),ActPublish.class);
+                intent.putExtra(Config.KEY_PHONE_MD5,phone_md5);
+                intent.putExtra(Config.KEY_TOKEN,token);
+                startActivityForResult(intent,0);
+                break;
+            default:
+                break;
+        }
+
+        return true;
     }
 
     private void loadMessage() {
@@ -81,7 +108,6 @@ public class ActTimeline extends ListActivity {
             @Override
             public void onSuccess(int page, int perpage,List<Message> timeline) {
 //                pd.dismiss();
-
                 adapter.addAll(timeline);
                 setListAdapter(adapter);
                 Log.d(Config.TAG, "ActTimeline设置适配器成功");
@@ -99,7 +125,16 @@ public class ActTimeline extends ListActivity {
 
             }
         });
-        System.out.println(">>>>>>>>>>>>>>>>loadMessage");
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case Config.NEED_REFRESH:
+                loadMessage();
+                break;
+            default:
+                break;
+        }
+    }
 }

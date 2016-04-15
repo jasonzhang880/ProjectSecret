@@ -76,8 +76,8 @@ public class ActTimelineMessageListAdapter extends BaseAdapter{
             this.tvCellLabel=CellLabel;
         }
         public TextView getTvCellLabel( ) {
-        return tvCellLabel;
-    }
+            return tvCellLabel;
+        }
 
     }
 }

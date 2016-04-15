@@ -12,6 +12,6 @@ public class ActPubMessage extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.aty_pubmessage);
+        setContentView(R.layout.aty_publish);
     }
 }

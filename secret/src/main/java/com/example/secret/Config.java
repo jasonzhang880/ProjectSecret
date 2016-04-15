@@ -20,14 +20,25 @@ public class Config {
     public static final String KEY_TIMELINE="timeline";
     public static final String KEY_MSG_ID="msgId";
     public static final String KEY_MSG="msg";
+    public static final String KEY_COMMENTS="comments";
+    public static final String KEY_CONTENT="content";
+
+
+
 
     public static final String ACTION_GET_CODE="send_pass";
     public static final String ACTION_LOGIN="login";
     public static final String ACTION_UPLOAD_CONTACTS="upload_contacts";
     public static final String ACTION_TIMELINE="timeline";
+    public static final String ACTION_GET_COMMENT="get_comment";
+    public static final String ACTION_PUB_COMMENT="pub_comment";
+    public static final String ACTION_PUBLISH="publish";
+
     public static final int RESULT_STATUS_SUCESS=1;
     public static final int RESULT_STATUS_FAIL=0;
     public static final int RESULT_STATUS_INVALID_TOKEN=2;
+
+    public static final int NEED_REFRESH=1000;
 
     public static final String APP_ID="com.jasonzhang.secret";
     public static final String CHARSET="utf-8";
@@ -35,8 +46,6 @@ public class Config {
     public static final String SERVER_URL="http://10.10.155.11:8080/TestServer/api.jsp";
 
     public static final String TAG="back_result";
-
-
 
 
 
