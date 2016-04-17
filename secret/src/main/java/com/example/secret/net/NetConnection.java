@@ -20,7 +20,7 @@ import java.net.URLConnection;
  */
 public class NetConnection {
 
-    public NetConnection(final String url, final HttpMethod method, final SuccessCallback successCallback, final FailCallback failCallback, final String...kvs) {
+    public NetConnection(final String url, final HttpMethod method, final SuccessCallback successCallback,final FailCallback failCallback, final String...kvs) {
         new AsyncTask<Void ,Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
